@@ -2,7 +2,7 @@
 # %pip install dash-mantine-components
 
 import dash
-from dash import html
+from dash import html, dcc
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
@@ -47,25 +47,37 @@ app.layout = html.Div(
     children = [
                        
         html.Div([
-            dbc.Offcanvas(
-                html.Div("""Dash, developed by Plotly, is a powerful Python framework for building interactive and data-driven web applications. 
-                         It offers a versatile set of tools and components for creating web-based data visualizations, interactive dashboards, 
-                         and custom web applications with ease. Dash helps leverage the power of Python and Plotly to create dynamic and 
-                         responsive web interfaces for data analysis, reporting, and more.""" ,
-                         id = 'offcanvas-body', className = 'fw-bold'), id = 'offcanvas', is_open = False, 
-                        keyboard = True, scrollable = True, title = "About Plotly Dash"),
+            dbc.Offcanvas(id = 'offcanvas', is_open = False, 
+                        keyboard = True, scrollable = True, title = "App Password Information",
+                        children = [html.H6("What is an App Password?"),
+                                    dcc.Markdown("""An "App Password" is a unique, application-specific password generated within your Google Account 
+                                           settings. This password is exclusively used for specific applications or services, like ours, and **does 
+                                           not provide access to your Google Account**."""),
+                                    html.H6("How to Generate an App Password:"),
+                                    dcc.Markdown('''
+                                                 * Log in to your Google Account.
+                                                 * Navigate to your Google Account settings.
+                                                 * Select the "Security" tab.
+                                                 * Select "2-step verification and locate the "App Passwords" section.
+                                                 * Generate a new App Password for Mail.
+                                                 * Use this App Password to contact me through my website.                                                 
+                                                '''),
+                                    html.H6("Your Account's Security Remains Intact"),
+                                    html.P("""Rest assured, using an App Password ensures that your primary Gmail account remains secure. This App 
+                                           Password is unique to our application and won't compromise your login credentials."""),]),
+                                    
+                
             ]),
 
         html.Div([
             dmc.Group([
                 html.Div(html.A("HOME", href='#home-section', className='nav-link fw-bold')),
                 html.Div(html.A("ABOUT", href='#about-section', className='nav-link fw-bold')),
-                html.Div(html.A("SKILLS", href='#skills-section', className='nav-link fw-bold')),
-                # html.Div(html.A("CLUBS and ACTIVITIES", href = '#clubs-section')), 
+                html.Div(html.A("SKILLS", href='#skills-section', className='nav-link fw-bold')), 
                 html.Div(html.A("EXPERIENCE", href='#experience-section', className='nav-link fw-bold')),
                 html.Div(html.A("PROJECTS", href='#projects-section', className='nav-link fw-bold')),
                 html.Div(html.A("CONTACT ME", href='#contact-section', className='nav-link fw-bold')),
-                html.Div(html.A("DASH", href='#dash-section', id='dash-button', className='nav-link fw-bold')),
+                html.Div(html.A("FYI :)", href='#offcanvas', id='fyi-button', className='nav-link fw-bold')),
                 ])
             ], style = {'position': 'fixed', 'padding': '20px'}),
                         
@@ -130,6 +142,23 @@ app.layout = html.Div(
         html.Br(),
         html.H1("EXPERIENCE", className = 'fw-bold text-center display-3'),
 
+        dbc.Card([
+            dbc.CardImg(src='/assets/test_clevered.png',
+                        alt="Clevered Image",
+                        top=True,
+                        style={"opacity": 0.3},
+                    ),
+            dbc.CardImgOverlay(
+                dbc.CardBody([
+                    html.H4("Data Analysis Intern", className="card-title"),
+                    html.P("Clevered, Noida, Uttar Pradesh", className="card-text"),
+                    html.A(["Visit website"], target = 'blank', href = "https://clevered.com/"),
+                    ],
+                ),
+            ),
+        ],
+        style={"width": "18rem"},
+    ),
         html.Div([
             dbc.Row([
                 dbc.Col([
@@ -217,7 +246,8 @@ app.layout = html.Div(
                 dbc.Row(dbc.Col([dbc.Button('Send Mail', id = 'send_info_mail', n_clicks = 0, color="warning", className = 'text-center')], style = {'display':'flex', 'justify-content':'center'})),
                                                                     
                 ]),
-        html.Div(id='confirmation-section'),
+        html.Br(),
+        html.Div(id='confirmation-section', style = {'display':'flex', 'justify-content':'center'}),
         html.Br(),
         html.Br(),
         html.Div([
@@ -263,15 +293,15 @@ def send_bday_anni_info(n_clicks, message, name, sender_email, password):
         recipient_email = 'arya.verma2021@vitstudent.ac.in'
   
         if send_email(sender_email, password, recipient_email, f"Message from {name}!", message) == 1:
-            return dbc.Alert('Email sent successfully!', color = 'success', style = {'width':'30vw'}) 
+            return dbc.Alert('Email sent successfully!',dismissable=True, color = 'success', style = {'width':'30vw'}) 
         else:
-            return dbc.Alert('Error: Incorrect password or authentication failed.', color = 'danger', style = {'width':'30vw'}) 
+            return dbc.Alert('Error: Incorrect password or authentication failed.', dismissable=True, color = 'danger', style = {'width':'30vw'}) 
     else:
         return ''   
     
 @app.callback(
     Output('offcanvas', 'is_open'),
-    Input('dash-button', 'n_clicks'),
+    Input('fyi-button', 'n_clicks'),
     State('offcanvas', 'is_open'),
 )
 def open_offcanvas(n_clicks, is_open):
