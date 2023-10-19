@@ -12,7 +12,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-app = dash.Dash(external_stylesheets=[dbc.themes.SKETCHY]) #CYBORG, MATERIA, MINTY, MORPH, QUARTZ, SKETCHY, SLATE, LUMEN   
+app = dash.Dash(external_stylesheets=[dbc.themes.CYBORG]) #CYBORG, MATERIA, MINTY, MORPH, QUARTZ, SKETCHY, SLATE, LUMEN   
+server = app.server
 
 def send_email(sender_email, password, recv_email, subject, message):
 
@@ -75,12 +76,13 @@ app.layout = html.Div(
                 html.Div(html.A("ABOUT", href='#about-section', className='nav-link fw-bold')),
                 html.Div(html.A("SKILLS", href='#skills-section', className='nav-link fw-bold')), 
                 html.Div(html.A("EXPERIENCE", href='#experience-section', className='nav-link fw-bold')),
+                html.Div(html.A("CLUBS", href='#clubs-section', className='nav-link fw-bold')),
                 html.Div(html.A("PROJECTS", href='#projects-section', className='nav-link fw-bold')),
                 html.Div(html.A("CONTACT ME", href='#contact-section', className='nav-link fw-bold')),
                 html.Div(html.A("FYI :)", href='#offcanvas', id='fyi-button', className='nav-link fw-bold')),
                 ])
             ], style = {'position': 'fixed', 'padding': '20px'}),
-                        
+        # dmc.Burger(id="burger-button", opened=False),                
         html.Div([  
             html.Div(id = 'home-section'),
             html.Br(),
@@ -114,6 +116,72 @@ app.layout = html.Div(
                                         contribute to the ever-evolving landscape of AI, ML and Data Science.""")], className = 'px-5'),
                                         ], style = {'height':'50vh','align-items': 'center'}),
                         
+        html.Div([
+            dmc.Timeline(
+                    active=1,
+                    bulletSize=15,
+                    lineWidth=2,
+                    children=[
+                        dmc.TimelineItem(
+                            title="New Branch",
+                            children=[
+                                dmc.Text(
+                                    [
+                                        html.P("Vellore Institute of Technology, Chennai"),
+                                        html.P("B.Tech. CSE (Spl. in AI and ML)"),
+                                        html.P("Current CGPA: 8.99"),
+                                    ],
+                                    color="dimmed",
+                                    size="sm",
+                                ),
+                            ],
+                        ),
+                        dmc.TimelineItem(
+                            title="Commits",
+                            children=[
+                                dmc.Text(
+                                    [
+                                        html.P("Sunbeam School"),
+                                        html.P("CBSE XII AISSCE"),
+                                        html.P("98.4% | 2020"),
+                                    ],
+                                    color="dimmed",
+                                    size="sm",
+                                ),
+                            ],
+                        ),
+                        dmc.TimelineItem(
+                            title="Pull Request",
+                            lineVariant="dashed",
+                            children=[
+                                dmc.Text(
+                                    [
+                                        html.P("Sunbeam School"),
+                                        html.P("CBSE X SSC"),
+                                        html.P("96.4% | 2018"),
+                                    ],
+                                    color="dimmed",
+                                    size="sm",
+                                ),
+                            ],
+                        ),
+                        dmc.TimelineItem(
+                            [
+                                dmc.Text(
+                                    [
+                                        html.P("Sunbeam School"),
+                                        html.P("CBSE KG - IX"),
+                                        html.P("2006 - 2017"),
+                                    ],
+                                    color="dimmed",
+                                    size="sm",
+                                ),
+                            ],
+                            title="Code Review",
+                        ),
+                    ],
+                )
+        ]),
         html.Div(id = 'skills-section'),
         html.Br(),
         html.Br(),
@@ -143,7 +211,7 @@ app.layout = html.Div(
         html.H1("EXPERIENCE", className = 'fw-bold text-center display-3'),
 
         dbc.Card([
-            dbc.CardImg(src='/assets/test_clevered.png',
+            dbc.CardImg(src='/assets/clevered.png',
                         alt="Clevered Image",
                         top=True,
                         style={"opacity": 0.3},
@@ -159,39 +227,74 @@ app.layout = html.Div(
         ],
         style={"width": "18rem"},
     ),
-        html.Div([
-            dbc.Row([
-                dbc.Col([
-                    html.Div([   
-                        html.H2("Data Analysis Intern"),
-                        html.Hr(className="my-2"),
-                        html.H6("Clevered, Noida, Uttar Pradesh")
-                        ],className="h-100 p-5 text-black rounded-3 justify-content-center",style={'margin-right': '60px'}),
-                
-                    html.Div([   
-                        html.H2("General Secretary"),
-                            html.Hr(className="my-2"),
-                            html.H6("Sangam, VIT Chennai")
-                            ],className="h-100 p-5 text-black rounded-3 justify-content-center",style={'margin-right': '60px'})
-                        ],style={"display": "flex", 'justify-content': 'center'}),
-                ]),
-            dbc.Row([
-                dbc.Col([
-                    html.Div([   
-                        html.H2("Technical Team"),
-                        html.Hr(className="my-2"),
-                        html.H6("IEEE Women In Engineering, VIT Chennai")
-                        ],className="h-100 p-5 text-black rounded-3 justify-content-center",style={'margin-right': '60px'}),
-                
-                    html.Div([   
-                        html.H2("Design Team"),
-                        html.Hr(className="my-2"),
-                        html.H6("Uddeshya, VIT Chennai")
-                        ],className="h-100 p-5 text-black rounded-3 justify-content-center", style={'margin-right': '60px'})
-                    ],style={"display": "flex", 'justify-content': 'center'}),
-                ])
-            ]),
 
+
+        html.Div(id = 'clubs-section'),
+        html.Br(),
+        html.Br(),
+        html.Br(),
+        html.H1("CLUBS", className = 'fw-bold text-center display-3'),
+        html.Br(),
+        html.Br(),
+        html.Br(),
+        html.Br(),
+        html.Div([
+            html.Div(
+                dbc.Card([
+                    dbc.CardImg(src='/assets/sangamLogo.jpg',
+                                alt="Sangam Image",
+                                top=True,
+                                style={"opacity": 0.3},
+                            ),
+                    dbc.CardImgOverlay(
+                        dbc.CardBody([
+                            html.H4("General Secretary", className="card-title"),
+                            html.P("Sangam, VIT Chennai", className="card-text"),
+                            html.A(["Visit"], target = 'blank', href = "https://www.linkedin.com/in/sangam-vit-chennai-a83b1827a/"),
+                            ],
+                        ),
+                    ),
+                ],
+                style={"width": "18rem"},
+            ),),
+                html.Div(
+                dbc.Card([
+                    dbc.CardImg(src='/assets/ieeewie.png',
+                                alt="IEEE Image",
+                                top=True,
+                                style={"opacity": 0.3},
+                            ),
+                    dbc.CardImgOverlay(
+                        dbc.CardBody([
+                            html.H4("Technical Team", className="card-title"),
+                            html.P("IEEE Women in Engineering, VIT Chennai", className="card-text"),
+                            html.A(["Visit"], target = 'blank', href = "https://wie.ieee.org/"),
+                            ],
+                        ),
+                    ),
+                ],
+                style={"width": "18rem"},
+            ),),
+                html.Div(
+                dbc.Card([
+                    dbc.CardImg(src='/assets/uddeshya1.png',
+                                alt="Uddeshya Image",
+                                top=True,
+                                style={"opacity": 0.3},
+                            ),
+                    dbc.CardImgOverlay(
+                        dbc.CardBody([
+                            html.H4("Design Team", className="card-title"),
+                            html.P("Uddeshya, VIT Chennai", className="card-text"),
+                            html.A(["Visit"], target = 'blank', href = "https://clevered.com/"),
+                            ],
+                        ),
+                    ),
+                ],
+                style={"width": "18rem"},
+            ),),
+        ], style = {'display':'flex', 'justify-content':'center'}),
+    
         html.Div(id = 'experience'),
 
         html.Br(),
@@ -290,7 +393,7 @@ app.layout = html.Div(
 def send_bday_anni_info(n_clicks, message, name, sender_email, password):
     if n_clicks > 0  and password is not None:
         
-        recipient_email = 'arya.verma2021@vitstudent.ac.in'
+        recipient_email = 'arya.verma.923@gmail.com'
   
         if send_email(sender_email, password, recipient_email, f"Message from {name}!", message) == 1:
             return dbc.Alert('Email sent successfully!',dismissable=True, color = 'success', style = {'width':'30vw'}) 
