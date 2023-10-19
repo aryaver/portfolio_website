@@ -12,7 +12,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-app = dash.Dash(external_stylesheets=[dbc.themes.CYBORG]) #CYBORG, MATERIA, MINTY, MORPH, QUARTZ, SKETCHY, SLATE, LUMEN   
+app = dash.Dash(external_stylesheets=[dbc.themes.MORPH]) #CYBORG, MATERIA, MINTY, MORPH, QUARTZ, SKETCHY, SLATE, LUMEN   
 server = app.server
 
 def send_email(sender_email, password, recv_email, subject, message):
@@ -79,6 +79,7 @@ app.layout = html.Div(
                 html.Div(html.A("CLUBS", href='#clubs-section', className='nav-link fw-bold')),
                 html.Div(html.A("PROJECTS", href='#projects-section', className='nav-link fw-bold')),
                 html.Div(html.A("CONTACT ME", href='#contact-section', className='nav-link fw-bold')),
+                # html.Div(dmc.Burger(html.A(href='#offcanvas', id='fyi-button', className='nav-link fw-bold'), opened=False)),
                 html.Div(html.A("FYI :)", href='#offcanvas', id='fyi-button', className='nav-link fw-bold')),
                 ])
             ], style = {'position': 'fixed', 'padding': '20px'}),
@@ -104,18 +105,31 @@ app.layout = html.Div(
                 html.Br(),
                 html.Br(),
                 html.H1("ABOUT", className = 'fw-bold text-center display-3'),
+                html.Div([html.H6("Hi there.")], style = {'text-align' : 'center', 'font-weight': 'bold'}),
+
                 html.Div([
-                    html.H6("Hi there.")
-                    ], style = {'text-align' : 'center', 'font-weight': 'bold'}),
-                html.Div([html.P("""I am a dedicated AI/ML enthusiast actively seeking an internship in the field of computer science 
-                                        and related technologies. What sets me apart is not just my technical acumen but also my outgoing nature, 
-                                        excellent communication skills, and knack for building meaningful connections. Beyond the world of algorithms 
-                                        and data, I have a deep passion for music, and I love to sing. This creative outlet not only adds harmony to 
-                                        my life but also enhances my problem-solving skills, offering a unique perspective to approaching challenges. 
-                                        I am genuinely excited to connect with like-minded professionals, learn from diverse perspectives, and 
-                                        contribute to the ever-evolving landscape of AI, ML and Data Science.""")], className = 'px-5'),
-                                        ], style = {'height':'50vh','align-items': 'center'}),
-                        
+                    dmc.Paper(
+                        children = 
+                            ["""I am a dedicated AI/ML enthusiast actively seeking an internship in the field of computer science 
+                                and related technologies. What sets me apart is not just my technical acumen but also my outgoing nature, 
+                                excellent communication skills, and knack for building meaningful connections. Beyond the world of algorithms 
+                                and data, I have a deep passion for music, and I love to sing. This creative outlet not only adds harmony to 
+                                my life but also enhances my problem-solving skills, offering a unique perspective to approaching challenges. 
+                                I am genuinely excited to connect with like-minded professionals, learn from diverse perspectives, and 
+                                contribute to the ever-evolving landscape of AI, ML and Data Science."""],shadow="xl")], 
+                                className = 'px-5'),
+                                ], style = {'height':'50vh','align-items': 'center'}),
+        dmc.Tabs([
+            dmc.TabsList([
+                dmc.Tab("Education",icon=DashIconify(icon="carbon:education"),value="education",),
+                dmc.Tab("Languages",icon=DashIconify(icon="uil:language"),value="languages",),
+                    ],position="center",
+                ),
+            ],
+            id="tabs",
+            value="education",
+        ),       
+html.Div(id="tabs-content", style={"paddingTop": 10}),         
         html.Div([
             dmc.Timeline(
                     active=1,
@@ -123,12 +137,11 @@ app.layout = html.Div(
                     lineWidth=2,
                     children=[
                         dmc.TimelineItem(
-                            title="New Branch",
+                            title="B.Tech. CSE (Spl. in AI and ML)",
                             children=[
                                 dmc.Text(
                                     [
                                         html.P("Vellore Institute of Technology, Chennai"),
-                                        html.P("B.Tech. CSE (Spl. in AI and ML)"),
                                         html.P("Current CGPA: 8.99"),
                                     ],
                                     color="dimmed",
@@ -137,12 +150,11 @@ app.layout = html.Div(
                             ],
                         ),
                         dmc.TimelineItem(
-                            title="Commits",
+                            title="CBSE XII AISSCE",
                             children=[
                                 dmc.Text(
                                     [
                                         html.P("Sunbeam School"),
-                                        html.P("CBSE XII AISSCE"),
                                         html.P("98.4% | 2020"),
                                     ],
                                     color="dimmed",
@@ -151,13 +163,12 @@ app.layout = html.Div(
                             ],
                         ),
                         dmc.TimelineItem(
-                            title="Pull Request",
+                            title="CBSE X SSC",
                             lineVariant="dashed",
                             children=[
                                 dmc.Text(
                                     [
                                         html.P("Sunbeam School"),
-                                        html.P("CBSE X SSC"),
                                         html.P("96.4% | 2018"),
                                     ],
                                     color="dimmed",
@@ -170,18 +181,55 @@ app.layout = html.Div(
                                 dmc.Text(
                                     [
                                         html.P("Sunbeam School"),
-                                        html.P("CBSE KG - IX"),
                                         html.P("2006 - 2017"),
                                     ],
                                     color="dimmed",
                                     size="sm",
                                 ),
                             ],
-                            title="Code Review",
+                            title="CBSE KG - IX",
                         ),
                     ],
                 )
         ]),
+
+        html.Div([
+            html.Div("English",),
+            dcc.Slider(
+                id='english-slider',
+                min=0,
+                max=100,
+                step=10,
+                value=100,
+                # marks={0: 'Basic', 50: 'Intermediate', 100: 'Full Proficiency'},
+                tooltip={'placement': 'bottom', 'always_visible': True},
+                disabled=True, 
+            ),
+            html.Div("Hindi",),
+            dcc.Slider(
+                id='hindi-slider',
+                min=0,
+                max=100,
+                step=10,
+                value=100,
+                # marks={0: 'Basic', 50: 'Intermediate', 100: 'Native Language'},
+                tooltip={'placement': 'bottom', 'always_visible': True},
+                disabled=True,  
+            ),
+            html.Div("French",),
+            dcc.Slider(
+                id='french-slider',
+                min=0,
+                max=100,
+                step=10,
+                value=30, 
+                marks={0: 'Basic', 50: 'Intermediate', 100: 'Full Proficiency'},
+                tooltip={'placement': 'bottom', 'always_visible': True},
+                disabled=True,
+            ),
+        ], style = {'width':'30vw'}),
+
+
         html.Div(id = 'skills-section'),
         html.Br(),
         html.Br(),
@@ -209,24 +257,32 @@ app.layout = html.Div(
         html.Br(),
         html.Br(),
         html.H1("EXPERIENCE", className = 'fw-bold text-center display-3'),
-
+        html.Br(),
+        html.Br(),
+        html.Br(),
+html.Div([
+    html.Div(
         dbc.Card([
             dbc.CardImg(src='/assets/clevered.png',
                         alt="Clevered Image",
                         top=True,
-                        style={"opacity": 0.3},
+                        # style={"opacity": 0.3},
                     ),
-            dbc.CardImgOverlay(
-                dbc.CardBody([
-                    html.H4("Data Analysis Intern", className="card-title"),
-                    html.P("Clevered, Noida, Uttar Pradesh", className="card-text"),
-                    html.A(["Visit website"], target = 'blank', href = "https://clevered.com/"),
-                    ],
-                ),
-            ),
+            # dbc.CardImgOverlay(
+            #     dbc.CardBody([
+            #         html.H4("Data Analysis Intern", className="card-title"),
+            #         html.P("Clevered, Noida, Uttar Pradesh", className="card-text"),
+            #         html.A(["Visit website"], target = 'blank', href = "https://clevered.com/"),
+            #         ],
+            #     ),
+            # ),
         ],
-        style={"width": "18rem"},
-    ),
+        # style={"width": "18rem"},
+    ),),
+    html.Div([html.H4("Data Analysis Intern"),
+    html.H5("Clevered"),
+    html.A(["Visit website"], target = 'blank', href = "https://clevered.com/"),])
+    ], style = {'display':'flex', 'justify-content':'center'}),
 
 
         html.Div(id = 'clubs-section'),
@@ -356,8 +412,10 @@ app.layout = html.Div(
         html.Div([
             html.Div([
                 html.A([
-                    DashIconify(icon="logos:google-gmail", width=48,)
-                    ], target = 'Blank', href = "https://mail.google.com/mail/u/0/#inbox?compose=new")], style = {'padding': '20px'}), 
+                    DashIconify(id = "gmail-icon",icon="logos:google-gmail", width=48,)
+                    ], target = 'Blank', href = "https://mail.google.com/mail/u/0/#inbox?compose=new"),
+                    dbc.Tooltip( """arya.verma.923@gmail.com""", 
+                                              id="tooltip", is_open=False, target="gmail-icon", trigger="hover", placement = 'left')], style = {'padding': '20px'}), 
             html.Div([
                 html.A([
                     DashIconify(icon="skill-icons:instagram", width=40,)
@@ -379,7 +437,13 @@ app.layout = html.Div(
                         
 ], style={'height': '100vh',})             
          
-
+@app.callback(Output("tabs-content", "children"), 
+              Input("tabs", "value"))
+def render_content(active):
+    if active == "education":
+        return [dmc.Text("Tab One selected")]
+    else:
+        return [dmc.Text("Tab Two selected")]
 
 @app.callback(
     Output('confirmation-section', 'children'), 
