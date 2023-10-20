@@ -12,7 +12,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-app = dash.Dash(external_stylesheets=[dbc.themes.MORPH]) #CYBORG, MATERIA, MINTY, MORPH, QUARTZ, SKETCHY, SLATE, LUMEN   
+app = dash.Dash(external_stylesheets=[dbc.themes.CYBORG]) #CYBORG, MATERIA, MINTY, MORPH, QUARTZ, SKETCHY, SLATE, LUMEN   
 server = app.server
 
 about_me = """I am a dedicated AI/ML enthusiast actively seeking an internship in the field of computer science 
@@ -94,15 +94,17 @@ app.layout = html.Div(
                 ])
             ], style = {'position': 'fixed', 'padding': '20px'}),
         # dmc.Burger(id="burger-button"),                
-        html.Div([  
-            html.Div(id = 'home-section'),
-            html.Br(),
-            html.Br(),
-            html.Br(),
-            html.H1("ARYA VERMA", className = 'fw-bold text-center display-3')
-            ],style = {'height':'50vh','align-items': 'center'}),#, 'padding': '100px'}),#
+ 
+        html.Div(id = 'home-section'),
+        html.Br(),
+        html.Br(),
+        html.Br(),
+        dbc.Row([
+            dbc.Col([
+                html.H1("ARYA VERMA", className = 'fw-bold text-center display-3')],style = {'align-items': 'center'}),
                         
-        html.Div(id = 'photo-gallery'),
+            dbc.Col([
+                html.Img(src="assets/me_photo.jpg", style={'height': '100vh', 'margin-left':'100px'})])]),
 
         html.Br(),
         html.Br(),
@@ -119,8 +121,8 @@ app.layout = html.Div(
         # html.Div([html.H6("Hi there.")], style = {'text-align' : 'center', 'font-weight': 'bold'}),
         dmc.Tabs([
             dmc.TabsList([
-                dmc.Tab("Education",icon=DashIconify(icon="carbon:education"),value="education",),
-                dmc.Tab("Languages",icon=DashIconify(icon="uil:language"),value="languages",),
+                dmc.Tab("Education",icon=DashIconify(icon="carbon:education"),value="education", style={'color': 'white'}),
+                dmc.Tab("Languages",icon=DashIconify(icon="uil:language"),value="languages", style={'color': 'white'}),
                     ],position="right", style = {'margin-right':'250px', 'margin-left':'250px'},
                 ),
             ],
@@ -154,7 +156,7 @@ app.layout = html.Div(
             DashIconify(icon = "devicon:pandas",width = 100, style={'margin-right': '20px'}),
             DashIconify(icon = "vscode-icons:file-type-excel",width = 100, style={'margin-right': '20px'}),
             DashIconify(icon = "devicon:git",width = 100, style={'margin-right': '20px'}),
-            DashIconify(icon = "devicon:github",width = 100, style={'margin-right': '20px'}),
+            DashIconify(icon = "arcticons:github",width = 100, style={'margin-right': '20px'}),
         ],style={"display": "flex", 'justify-content': 'center'}),
 
         html.Br(),
@@ -169,6 +171,7 @@ app.layout = html.Div(
         html.H1("EXPERIENCE", className = 'fw-bold text-center display-3'),
         html.Br(),
         html.Br(),
+        
         html.Br(),
         
         dbc.Row([dbc.Col(
@@ -181,11 +184,21 @@ app.layout = html.Div(
             ],
             style={"width": "18rem"},
         ),),
-        dbc.Col([html.H4("Data Analysis Intern", className = 'fw-bold'),
-        html.Div("Clevered"),
-        html.A(["Visit website"], target = 'blank', href = "https://clevered.com/"),]),], style  = {'margin-left':'250px'}),
-            
+        dbc.Col([
+            html.H4("Data Analysis Intern, Clevered", className = 'fw-bold'),
+            # html.Div("Clevered"),
+            html.P("""Developed an interactive dashboard to enhance data visualization. Collaborated with HR team to tailor 
+                     the dashboard for their specific needs, leading to increased efficiency in HR processes. This dashboard is 
+                     being used by the HR of the company. Currently working on the integration of HubSpot with the company's 
+                     data sheets, with the aim of automating lead conversion and handling processes, reducing manual data entry, 
+                     and improving lead management efficiency."""),
+            html.P("""Also crafting content for the company's publications and reports with exceptional expertise."""),         
+            html.P(html.A(["Visit website"], target = 'blank', href = "https://clevered.com/")),
 
+        ]),], style  = {'margin-left':'250px','margin-right':'200px'}),
+            
+        html.Br(),
+        html.Br(),
 
         html.Div(id = 'clubs-section'),
         html.Br(),
@@ -272,19 +285,19 @@ app.layout = html.Div(
         dbc.Row([
             dbc.Col(
                 html.Div([   
-                    html.H2("HR Dashboard"),
+                    html.H4("HR Dashboard"),
                     html.Hr(className="my-2"),
                     html.A("View Project", target = 'blank', href = "https://github.com/aryaver/dashboard_launch.git")
                     ],className="h-100 p-5 rounded-3 justify-content-center")),
             dbc.Col(
                 html.Div([   
-                    html.H2("Lead Analysis Dashboard"),
+                    html.H4("Lead Analysis Dashboard"),
                     html.Hr(className="my-2"),
                     html.A("View Project", target = 'blank', href = "https://github.com/aryaver/clevered_sales_dash.git")
                     ],className="h-100 p-5 rounded-3 justify-content-center")),
             dbc.Col(
                 html.Div([   
-                    html.H2("Portfolio Website"),
+                    html.H4("Portfolio Website"),
                     html.Hr(className="my-2"),
                     html.A("Visit website", href = "/")
                     ],className="h-100 p-5 rounded-3 justify-content-center")),
@@ -346,15 +359,15 @@ app.layout = html.Div(
                     ], target = 'Blank', href = "https://www.linkedin.com/in/arya-verma-a18719279/")], style = {'padding': '20px'}),
             html.Div([
                 html.A([
-                    DashIconify(icon="devicon:github", width=40,)
+                    DashIconify(icon="arcticons:github", width=40,)
                     ], target = 'Blank', href = "https://github.com/aryaver")], style = {'padding': '20px'}),
                 ],  style = {'justify-content': 'center','display':'flex'}
             ),
 
         html.Br(),
         html.Br(),
-        html.Div(["designed and developed by Arya", DashIconify(icon="meteocons:pollen-flower-fill", width=30)], className = 'fst-italic text-center'),
-        html.Div(["using Python"], className = 'fst-italic text-center'),
+        html.Div(["designed and developed by Arya"], className = 'fst-italic text-center'),
+        html.Div(["using Python", DashIconify(icon="meteocons:pollen-flower-fill", width=40)], className = 'fst-italic text-center'),
         # html.Br(),
                         
 ], style={'height': '100vh',})             
@@ -371,6 +384,7 @@ def render_content(active):
                     children=[
                         dmc.TimelineItem(
                             title="B.Tech. CSE (Spl. in AI and ML)",
+                            className = 'text-white',
                             children=[
                                 dmc.Text(
                                     [
@@ -384,6 +398,7 @@ def render_content(active):
                         ),
                         dmc.TimelineItem(
                             title="CBSE XII AISSCE",
+                            className = 'text-white',
                             children=[
                                 dmc.Text(
                                     [
@@ -397,6 +412,7 @@ def render_content(active):
                         ),
                         dmc.TimelineItem(
                             title="CBSE X SSC",
+                            className = 'text-white',
                             lineVariant="dashed",
                             children=[
                                 dmc.Text(
@@ -421,6 +437,7 @@ def render_content(active):
                                 ),
                             ],
                             title="CBSE KG - IX",
+                            className = 'text-white',
                         ),
                     ],
                 )
@@ -428,29 +445,34 @@ def render_content(active):
         return ed
     else:
         lang = html.Div([
-            html.Div("English",),
+            html.Div("English",className = 'text-white',),
+            
             dcc.Slider(
                 id='english-slider',
                 min=0,
                 max=100,
                 step=10,
                 value=100,
-                # marks={0: 'Basic', 50: 'Intermediate', 100: 'Full Proficiency'},
+                marks={0: 'Basic', 50: 'Intermediate', 100: 'Full Proficiency'},
                 tooltip={'placement': 'bottom', 'always_visible': True},
                 disabled=True, 
             ),
-            html.Div("Hindi",),
+            html.Br(),
+            html.Br(),
+            html.Div("Hindi",className = 'text-white',),
             dcc.Slider(
                 id='hindi-slider',
                 min=0,
                 max=100,
                 step=10,
                 value=100,
-                # marks={0: 'Basic', 50: 'Intermediate', 100: 'Native Language'},
+                marks={0: 'Basic', 50: 'Intermediate', 100: 'Native Language'},
                 tooltip={'placement': 'bottom', 'always_visible': True},
                 disabled=True,  
             ),
-            html.Div("French",),
+            html.Br(),
+            html.Br(),
+            html.Div("French",className = 'text-white',),
             dcc.Slider(
                 id='french-slider',
                 min=0,
